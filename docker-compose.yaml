@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:latest
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - app-network
+
+  frontend:
+    build: 
+      context: ./frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend-service
+    networks:
+      - app-network
+
+  backend-service:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_CONNECTION_STRING=mongodb://mongo:27017/myMernApp
+    networks:
+      - app-network
+
+
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
+    driver: local
