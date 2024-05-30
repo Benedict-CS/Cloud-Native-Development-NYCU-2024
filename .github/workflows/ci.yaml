@@ -41,13 +41,13 @@ jobs:
 
       - name: Format code
         run: npx prettier --write .
-        working-directory: ./app
+        working-directory: ./backend
 
       - name: Check for changes
         id: git-check
         run: |
           git diff --exit-code || echo "##[set-output name=changes_detected;]true"
-        working-directory: ./app
+        working-directory: ./backend
 
       - name: Commit changes
         if: steps.git-check.outputs.changes_detected == 'true'
@@ -57,4 +57,4 @@ jobs:
           git config user.email 'ben111611@gmail.com'
           git commit -m "Apply code formatting"
           git push
-        working-directory: ./app
+        working-directory: ./backend
