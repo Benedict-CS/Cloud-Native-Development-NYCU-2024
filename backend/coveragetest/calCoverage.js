@@ -71,15 +71,6 @@ fs.readFile(coverageFilePath, 'utf8', (err, data) => {
     }
   })
 
-  // console.info('coveredStatements:', coveredStatements);
-  // console.info('totalStatements:', totalStatements);
-  // console.info('coveredBranches:', coveredBranches);
-  // console.info('totalBranches:', totalBranches);
-  // console.info('coveredFunctions:', coveredFunctions);
-  // console.info('totalFunctions:', totalFunctions);
-  // console.info('coveredLines:', coveredLines);
-  // console.info('totalLines:', totalLines);
-
   console.log(`Overall statement coverage: ${overallStatementCoverage.toFixed(3)}%`)
   console.log(`Overall branch coverage: ${overallBranchCoverage.toFixed(3)}%`)
   console.log(`Overall function coverage: ${overallFunctionCoverage.toFixed(3)}%`)

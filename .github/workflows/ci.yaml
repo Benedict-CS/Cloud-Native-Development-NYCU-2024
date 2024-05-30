@@ -38,11 +38,12 @@ jobs:
         run: node ./coveragetest/checkCoverage.js
         working-directory: ./backend
 
-      - name: Upload coverage to Artifact
+      - name: Upload coverage summary as old coverage
+        if: success()
         uses: actions/upload-artifact@v2
         with:
           name: coverage-report
-          path: ./backend/coveragetest/lcov-report/
+          path: backend/coverage-compare/lcov-report/
 
       - name: Format JavaScript and TypeScript files
         run: npx prettier --write "**/*.{js,ts}"
