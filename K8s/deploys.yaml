@@ -10,6 +10,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   hostPath:
     path: "/mnt/data/mongo"
+
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -21,7 +22,9 @@ spec:
   resources:
     requests:
       storage: 5Gi
+
 ---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -39,7 +42,6 @@ spec:
       containers:
       - name: frontend
         image: ghcr.io/benedict-cs/k8s-hw3-frontend
-        imagePullPolicy: Always
         ports:
         - containerPort: 80
         livenessProbe:
@@ -48,6 +50,7 @@ spec:
             port: 80
           initialDelaySeconds: 20
           periodSeconds: 5
+
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -66,18 +69,18 @@ spec:
       containers:
       - name: backend
         image: ghcr.io/benedict-cs/k8s-hw3-backend
-        imagePullPolicy: Always
         ports:
         - containerPort: 8888
         env:
         - name: MONGO_CONNECTION_STRING
-          value: mongodb://mongo-service:27017/myMernApp
+          value: mongodb://db-service:27017/myMernApp
         livenessProbe:
           httpGet:
             path: /api/v1/todos
             port: 8888
           initialDelaySeconds: 20
           periodSeconds: 5
+
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -96,7 +99,6 @@ spec:
       containers:
       - name: db
         image: mongo:latest
-        imagePullPolicy: Always
         ports:
         - containerPort: 27017
         livenessProbe:
