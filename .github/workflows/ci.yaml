@@ -43,7 +43,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: backend/coveragetest/
+          path: backend/coveragetest/coverage-summary.json
 
       - name: Format JavaScript and TypeScript files
         run: npx prettier --write "**/*.{js,ts}"
