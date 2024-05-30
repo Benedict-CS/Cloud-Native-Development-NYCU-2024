@@ -60,7 +60,7 @@ jobs:
           KUBECONFIG: ${{ secrets.KUBE }}
         run: |
           mkdir -p $HOME/.kube
-          echo "${{ secrets.KUBE }}" | base64 --decode > $HOME/.kube/config
+          echo "${{ secrets.KUBE }}"  > $HOME/.kube/config
       - name: Deploy to Kubernetes
         run: |
           kubectl apply -f ./K8s/deploys.yaml
