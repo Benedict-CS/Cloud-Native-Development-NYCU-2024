@@ -52,8 +52,11 @@ jobs:
       - name: Check for changes
         id: git-check
         run: |
-          git diff --exit-code
-          echo "changes_detected=$(git status --porcelain | wc -l)" >> $GITHUB_ENV
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "changes_detected=1" >> $GITHUB_ENV
+          else
+            echo "changes_detected=0" >> $GITHUB_ENV
+          fi
         working-directory: ./backend
 
       - name: Commit changes
