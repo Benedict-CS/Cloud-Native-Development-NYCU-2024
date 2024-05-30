@@ -6,7 +6,7 @@ const { exit } = require('process')
 const coverageFilePath = path.join(__dirname, '../coverage/coverage-final.json')
 
 // Path to the coverage-summary.json file
-const coverageSummaryPath = path.join(__dirname, './result/coverage-summary.json')
+const coverageSummaryPath = path.join(__dirname, 'coverage-summary.json')
 
 // Read and parse the coverage JSON file
 fs.readFile(coverageFilePath, 'utf8', (err, data) => {
@@ -70,6 +70,8 @@ fs.readFile(coverageFilePath, 'utf8', (err, data) => {
       exit(1)
     }
   })
+
+
 
   console.log(`Overall statement coverage: ${overallStatementCoverage.toFixed(3)}%`)
   console.log(`Overall branch coverage: ${overallBranchCoverage.toFixed(3)}%`)

@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 
-const newCoveragePath = path.join(__dirname, './result/coverage-summary.json')
+const newCoveragePath = path.join(__dirname, 'coverage-summary.json')
 const oldCoveragePath = path.join(__dirname, 'old.json')
 
 // Read the new coverage summary
