@@ -24,37 +24,32 @@ jobs:
         run: npm run test
         working-directory: ./backend
 
-      # - name: Compare coverage
-      #   run: npm run vitest run --coverage
-      #   working-directory: ./backend
-
       - name: Upload coverage to Artifact
         uses: actions/upload-artifact@v2
         with:
           name: coverage-report
-          path: coverage/lcov-report/
+          path: backend/coverage/lcov-report/
 
       - name: Compare coverage
-        run: |
-          # Implement actual logic to compare coverage percentages
-          echo "Compare coverage script should go here."
+        run: echo "Compare coverage script should go here."
+        working-directory: ./backend
 
-      - name: Format code
-        run: npx prettier --write .
+      - name: Format JavaScript and JSON files
+        run: npx prettier --write "**/*.{js,json,css,md}"
         working-directory: ./backend
 
       - name: Check for changes
         id: git-check
         run: |
-          git diff --exit-code || echo "##[set-output name=changes_detected;]true"
+          git diff --exit-code || echo "::set-output name=changes_detected::true"
         working-directory: ./backend
 
       - name: Commit changes
         if: steps.git-check.outputs.changes_detected == 'true'
         run: |
           git add .
-          git config user.name 'Benedict1033'
-          git config user.email 'ben111611@gmail.com'
+          git config user.name 'Benedict-CS'
+          git config user.email 'benedicttiong.cs@gmail.com'
           git commit -m "Apply code formatting"
           git push
         working-directory: ./backend
