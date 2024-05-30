@@ -14,18 +14,18 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: '18'
       
       - name: Install dependencies
         run: npm install
         working-directory: ./backend
 
       - name: Run tests
-        run: npm test
+        run: npm run test
         working-directory: ./backend
 
       - name: Compare coverage
-        run: npm run coverage
+        run: npm run vitest run --coverage
         working-directory: ./backend
 
       - name: Upload coverage to Artifact
