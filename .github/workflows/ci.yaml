@@ -28,14 +28,14 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: coverage-report
-          path: backend/coverage/lcov-report/
+          path: ./backend/coverage/lcov-report/
 
       - name: Compare coverage
         run: echo "Compare coverage script should go here."
         working-directory: ./backend
 
       - name: Format JavaScript and JSON files
-        run: npx prettier --write "**/*.{js,json,css,md}"
+        run: npx prettier --write "**/*.{js,json}"
         working-directory: ./backend
 
       - name: Check for changes
