@@ -6,7 +6,7 @@ const { exit } = require('process')
 const coverageFilePath = path.join(__dirname, '../coverage/coverage-final.json')
 
 // Path to the coverage-summary.json file
-const coverageSummaryPath = path.join(__dirname, 'coverage-summary.json')
+const coverageSummaryPath = path.join(__dirname, './result/coverage-summary.json')
 
 // Read and parse the coverage JSON file
 fs.readFile(coverageFilePath, 'utf8', (err, data) => {
