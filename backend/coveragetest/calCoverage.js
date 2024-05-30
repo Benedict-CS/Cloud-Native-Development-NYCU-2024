@@ -71,8 +71,6 @@ fs.readFile(coverageFilePath, 'utf8', (err, data) => {
     }
   })
 
-
-
   console.log(`Overall statement coverage: ${overallStatementCoverage.toFixed(3)}%`)
   console.log(`Overall branch coverage: ${overallBranchCoverage.toFixed(3)}%`)
   console.log(`Overall function coverage: ${overallFunctionCoverage.toFixed(3)}%`)
