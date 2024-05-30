@@ -47,8 +47,8 @@ jobs:
           sudo wget https://github.com/mikefarah/yq/releases/download/v4.20.2/yq_linux_amd64 -O /usr/bin/yq
           sudo chmod +x /usr/bin/yq
       - run: |
-          yq eval -i 'select(.kind == "Deployment" and .metadata.name == "k8s-backend").spec.template.spec.containers[] |= select(.name == "k8s-backend").image = "ghcr.io/benedict-cs/k8s-backend:${{ github.sha }}"' ./K8s/deploys.yaml
-          yq eval -i 'select(.kind == "Deployment" and .metadata.name == "k8s-frontend").spec.template.spec.containers[] |= select(.name == "k8s-frontend").image = "ghcr.io/benedict-cs/k8s-frontend:${{ github.sha }}"' ./K8s/deploys.yaml
+          yq eval -i 'select(.kind == "Deployment" and .metadata.name == "k8s-hw3-backend").spec.template.spec.containers[] |= select(.name == "k8s-hw3-backend").image = "ghcr.io/benedict-cs/k8s-backend:${{ github.sha }}"' ./K8s/deploys.yaml
+          yq eval -i 'select(.kind == "Deployment" and .metadata.name == "k8s-hw3-frontend").spec.template.spec.containers[] |= select(.name == "k8s-hw3-frontend").image = "ghcr.io/benedict-cs/k8s-frontend:${{ github.sha }}"' ./K8s/deploys.yaml
       - uses: google-github-actions/setup-gcloud@v0.2.0
         with:
           version: "latest"
