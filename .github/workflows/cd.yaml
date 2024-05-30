@@ -65,7 +65,6 @@ jobs:
           echo "${{ secrets.KUBE }}"  > $HOME/.kube/config
       - name: Deploy to Kubernetes
         run: |
-          kubectl delete deployments --all 
           kubectl apply -f ./K8s/deploys.yaml
           kubectl apply -f ./K8s/services.yaml
           kubectl apply -f ./K8s/ingress.yaml
