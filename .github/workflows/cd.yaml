@@ -74,5 +74,3 @@ jobs:
           cat ./K8s/deploys.yaml
           echo "Current Pods in the Kubernetes Cluster:"
           kubectl get pods
-          kubectl logs frontend-deployment-5cf569cbc5-csjdq
-          kubectl logs backend-deployment-5d49984b75-zt9xl
