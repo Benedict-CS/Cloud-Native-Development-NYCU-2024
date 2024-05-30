@@ -6,57 +6,61 @@ on:
       - main
 
 jobs:
-  setup:
+  docker_build_frontend:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Setup Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to Docker Registry
-        uses: docker/login-action@v3
+      - uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.SECRET }}
-
-      - name: Build and Push Docker Images
-        uses: docker/build-push-action@v5
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v5
         with:
-          tags: |
-            ghcr.io/benedict-cs/k8s-frontend:${{ github.sha }}
-            ghcr.io/benedict-cs/k8s-backend:${{ github.sha }}
+          context: "frontend"
           push: true
-          context: ./
-          file: |
-            ./frontend/Dockerfile
-            ./backend/Dockerfile
+          tags: ghcr.io/benedict-cs/k8s-frontend:${{ github.sha }}
 
-      - name: Setup GCP
-        uses: google-github-actions/setup-gcloud@v0.2.0
+  docker_build_backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
         with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.SECRET }}
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v5
+        with:
+          context: "backend"
+          push: true
+          tags: ghcr.io/benedict-cs/k8s-backend:${{ github.sha }}
+
+  deploy:
+    needs: [docker_build_frontend, docker_build_backend]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          sudo wget https://github.com/mikefarah/yq/releases/download/v4.20.2/yq_linux_amd64 -O /usr/bin/yq
+          sudo chmod +x /usr/bin/yq
+      - run: |
+          yq eval -i 'select(.kind == "Deployment" and .metadata.name == "k8s-backend").spec.template.spec.containers[] |= select(.name == "k8s-backend").image = "ghcr.io/benedict-cs/k8s-backend:${{ github.sha }}"' ./K8s/deploys.yaml
+          yq eval -i 'select(.kind == "Deployment" and .metadata.name == "k8s-frontend").spec.template.spec.containers[] |= select(.name == "k8s-frontend").image = "ghcr.io/benedict-cs/k8s-frontend:${{ github.sha }}"' ./K8s/deploys.yaml
+      - uses: google-github-actions/setup-gcloud@v0.2.0
+        with:
+          version: "latest"
           project_id: ${{ secrets.GCP_PROJECT_ID }}
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           export_default_credentials: true
-
-      - name: Configure Kubeconfig
-        run: |
+      - run: |
           mkdir -p $HOME/.kube
           echo "${{ secrets.KUBECONFIG }}" | base64 --decode > $HOME/.kube/config
-
-      - name: Apply Kubernetes Configuration
-        run: |
+          cat ./K8s/deploys.yaml
+          kubectl get pods
+      - run: |
           kubectl apply -f ./K8s/deploys.yaml
           kubectl apply -f ./K8s/services.yaml
           kubectl apply -f ./K8s/ingress.yaml
-          kubectl get all
-
-      - name: Debug Information
-        if: failure()
-        run: |
-          echo "Kubernetes config file content:"
-          cat $HOME/.kube/config
-          echo "Cluster information:"
-          kubectl cluster-info
-          kubectl config view
