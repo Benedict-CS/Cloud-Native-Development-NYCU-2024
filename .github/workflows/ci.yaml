@@ -24,18 +24,18 @@ jobs:
         run: |
           npm run test --coverage
           ls -l ./coverage  # 新增的步驟來列出 coverage 目錄的內容
-          node ./coverage/calCoverage.js
+          node ./coveragetest/calCoverage.js
         working-directory: ./backend
 
       - name: Check and compare coverage
-        run: node ./coverage/checkCoverage.js
+        run: node ./coveragetest/checkCoverage.js
         working-directory: ./backend
 
       - name: Upload coverage to Artifact
         uses: actions/upload-artifact@v2
         with:
           name: coverage-report
-          path: ./backend/coverage/lcov-report/
+          path: ./backend/coveragetest/lcov-report/
 
       - name: Format JavaScript and TypeScript files
         run: npx prettier --write "**/*.{js,ts}"
