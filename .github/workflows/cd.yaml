@@ -66,8 +66,8 @@ jobs:
 
       - name: Update image tags in deploys.yaml
         run: |
-          yq eval -i 'select(.kind == "Deployment" and .metadata.name == "k8s-backend").spec.template.spec.containers[] |= select(.name == "k8s-backend").image = "ghcr.io/benedict-cs/k8s-backend:${{ github.sha }}"' ./k8s/deploys.yaml
-          yq eval -i 'select(.kind == "Deployment" and .metadata.name == "k8s-frontend").spec.template.spec.containers[] |= select(.name == "k8s-frontend").image = "ghcr.io/benedict-cs/k8s-frontend:${{ github.sha }}"' ./k8s/deploys.yaml
+          yq eval -i 'select(.kind == "Deployment" and .metadata.name == "k8s-backend").spec.template.spec.containers[] |= select(.name == "k8s-backend").image = "ghcr.io/benedict-cs/k8s-backend:${{ github.sha }}"' ./K8s/deploys.yaml
+          yq eval -i 'select(.kind == "Deployment" and .metadata.name == "k8s-frontend").spec.template.spec.containers[] |= select(.name == "k8s-frontend").image = "ghcr.io/benedict-cs/k8s-frontend:${{ github.sha }}"' ./K8s/deploys.yaml
 
       - name: Set up Google Cloud Platform
         uses: google-github-actions/setup-gcloud@v0.2.0
@@ -86,11 +86,11 @@ jobs:
 
       - name: Debug
         run: |
-          cat ./k8s/deploys.yaml
+          cat ./K8s/deploys.yaml
           kubectl get pods
 
       - name: Deploy to Kubernetes
         run: |
-          kubectl apply -f ./k8s/deploys.yaml
-          kubectl apply -f ./k8s/services.yaml
-          kubectl apply -f ./k8s/ingress.yaml
+          kubectl apply -f ./K8s/deploys.yaml
+          kubectl apply -f ./K8s/services.yaml
+          kubectl apply -f ./K8s/ingress.yaml
