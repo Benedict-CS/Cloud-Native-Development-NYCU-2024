@@ -27,8 +27,8 @@ jobs:
         working-directory: ./backend
 
       - name: Check and compare coverage
-        run: node backend/coverage/checkCoverage.js
-
+        run: node ./coverage/checkCoverage.js
+        working-directory: ./backend
 
       - name: Upload coverage to Artifact
         uses: actions/upload-artifact@v2
