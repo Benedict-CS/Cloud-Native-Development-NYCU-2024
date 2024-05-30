@@ -26,9 +26,9 @@ jobs:
           node ./coverage-compare/calculateCoverage.js
         working-directory: ./backend
 
-      - name: Run tests
-        run: npm run test
-        working-directory: ./backend
+      - name: Check and compare coverage
+        run: node backend/coverage-compare/checkCoverage.js
+
 
       - name: Upload coverage to Artifact
         uses: actions/upload-artifact@v2
