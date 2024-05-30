@@ -23,11 +23,11 @@ jobs:
       - name: Generate new coverage report
         run: |
           npm run test --coverage
-          node ./coverage-compare/calculateCoverage.js
+          node ./coverage/calCoverage.js
         working-directory: ./backend
 
       - name: Check and compare coverage
-        run: node backend/coverage-compare/checkCoverage.js
+        run: node backend/coverage/checkCoverage.js
 
 
       - name: Upload coverage to Artifact
