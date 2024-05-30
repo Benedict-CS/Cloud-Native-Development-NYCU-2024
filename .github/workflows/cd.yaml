@@ -57,7 +57,7 @@ jobs:
           export_default_credentials: true
       - run: |
           mkdir -p $HOME/.kube
-          echo "${{ secrets.KUBECONFIG }}" | base64 --decode > $HOME/.kube/config
+          echo "${{ secrets.KUBE }}" | base64 --decode > $HOME/.kube/config
           cat ./K8s/deploys.yaml
           kubectl get pods
       - run: |
