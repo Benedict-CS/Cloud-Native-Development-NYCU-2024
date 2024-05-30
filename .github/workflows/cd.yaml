@@ -55,12 +55,20 @@ jobs:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           export_default_credentials: true
-      - run: |
+      - name: Configure kubectl
+        env:
+          KUBECONFIG: ${{ secrets.KUBE }}
+        run: |
           mkdir -p $HOME/.kube
           echo "${{ secrets.KUBE }}" | base64 --decode > $HOME/.kube/config
-          cat ./K8s/deploys.yaml
-          kubectl get pods
-      - run: |
+      - name: Deploy to Kubernetes
+        run: |
           kubectl apply -f ./K8s/deploys.yaml
           kubectl apply -f ./K8s/services.yaml
           kubectl apply -f ./K8s/ingress.yaml
+      - name: Debug
+        run: |
+          echo "Contents of K8s Deployment YAML:"
+          cat ./K8s/deploys.yaml
+          echo "Current Pods in the Kubernetes Cluster:"
+          kubectl get pods
