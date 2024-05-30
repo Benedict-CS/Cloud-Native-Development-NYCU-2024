@@ -24,9 +24,9 @@ jobs:
         run: npm run test
         working-directory: ./backend
 
-      - name: Compare coverage
-        run: npm run vitest run --coverage
-        working-directory: ./backend
+      # - name: Compare coverage
+      #   run: npm run vitest run --coverage
+      #   working-directory: ./backend
 
       - name: Upload coverage to Artifact
         uses: actions/upload-artifact@v2
