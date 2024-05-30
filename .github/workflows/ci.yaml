@@ -21,8 +21,9 @@ jobs:
         working-directory: ./backend
 
       - name: Generate new coverage report
-        run: npm run test --coverage
-        run: node ./coverage-compare/calculateCoverage.js
+        run: |
+          npm run test --coverage
+          node ./coverage-compare/calculateCoverage.js
         working-directory: ./backend
 
       - name: Run tests
