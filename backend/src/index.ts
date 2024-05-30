@@ -7,15 +7,15 @@ dotenv.config()
 const server = serverOf()
 
 const appConfig: AppConfig = {
-  host: process.env.HOST || 'localhost',
+     host: process.env.HOST || 'localhost',
   port: process.env.PORT ? parseInt(process.env.PORT) : 3000,
-  mongoConnectionString: process.env.MONGO_CONNECTION_STRING || ''
+       mongoConnectionString: process.env.MONGO_CONNECTION_STRING || ''
 }
 
 serverStart(appConfig)(server)
   .then(() => {
-    console.log(`Server listening on ${appConfig.host}:${appConfig.port}`)
+                 console.log(`Server listening on ${appConfig.host}:${appConfig.port}`)
   })
   .catch((err) => {
-    console.error(err)
+       console.error(err)
   })
