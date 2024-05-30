@@ -68,7 +68,7 @@ jobs:
       - name: Deploy to GCP
         run: |
           gcloud compute ssh benedict_cs12@instance-20240417-105505 --zone us-central1-a --command="
-          echo "123"
+          echo "1234"
           ls
           "
         working-directory: ./app
