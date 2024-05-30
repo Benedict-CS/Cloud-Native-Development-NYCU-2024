@@ -18,15 +18,15 @@ jobs:
       
       - name: Install dependencies
         run: npm install
-        working-directory: ./app
+        working-directory: ./backend
 
       - name: Run tests
         run: npm test
-        working-directory: ./app
+        working-directory: ./backend
 
       - name: Compare coverage
         run: npm run coverage
-        working-directory: ./app
+        working-directory: ./backend
 
       - name: Upload coverage to Artifact
         uses: actions/upload-artifact@v2
