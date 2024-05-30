@@ -14,8 +14,8 @@ const appConfig: AppConfig = {
 
 serverStart(appConfig)(server)
   .then(() => {
-        console.log(`Server listening on ${appConfig.host}:${appConfig.port}`)
+    console.log(`Server listening on ${appConfig.host}:${appConfig.port}`)
   })
   .catch((err) => {
-       console.error(err)
+    console.error(err)
   })
