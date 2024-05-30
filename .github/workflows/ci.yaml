@@ -1,0 +1,67 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - main
+      - action
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./backend
+
+      - name: Generate new coverage report
+        run: npm run test --coverage
+        working-directory: ./backend
+
+      - name: List coverage directory contents
+        run: ls -la ./coveragetest
+        working-directory: ./backend
+
+      - name: Calculate new coverage
+        run: node ./coveragetest/calCoverage.js
+        working-directory: ./backend
+
+      - name: Check and compare coverage
+        run: node ./coveragetest/checkCoverage.js
+        working-directory: ./backend
+
+      - name: Upload coverage summary as old coverage
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: backend/coveragetest/coverage-summary.json
+
+      - name: Format JavaScript and TypeScript files
+        run: npx prettier --write "**/*.{js,ts}"
+        working-directory: ./backend
+
+      - name: Check for changes
+        id: git-check
+        run: |
+          git diff --exit-code || true
+          echo "changes_detected=$(git status --porcelain | wc -l)" >> $GITHUB_ENV
+        working-directory: ./backend
+
+      - name: Commit changes
+        if: env.changes_detected != '0'
+        run: |
+          git add .
+          git config user.name 'Benedict-CS'
+          git config user.email 'benedicttiong.cs@gmail.com'
+          git commit -m "Apply code formatting"
+          git push
+        working-directory: ./backend
