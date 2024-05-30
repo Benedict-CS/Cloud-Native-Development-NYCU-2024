@@ -27,22 +27,22 @@ jobs:
         working-directory: ./backend
 
       - name: List coverage directory contents
-        run: ls -la ./coverage
+        run: ls -la ./coveragetest
         working-directory: ./backend
 
       - name: Calculate new coverage
-        run: node ./coverage/calCoverage.js
+        run: node ./coveragetest/calCoverage.js
         working-directory: ./backend
 
       - name: Check and compare coverage
-        run: node ./coverage/checkCoverage.js
+        run: node ./coveragetest/checkCoverage.js
         working-directory: ./backend
 
       - name: Upload coverage to Artifact
         uses: actions/upload-artifact@v2
         with:
           name: coverage-report
-          path: ./backend/coverage/lcov-report/
+          path: ./backend/coveragetest/lcov-report/
 
       - name: Format JavaScript and TypeScript files
         run: npx prettier --write "**/*.{js,ts}"
