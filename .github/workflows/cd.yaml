@@ -56,6 +56,17 @@ jobs:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           export_default_credentials: true
 
+
+      - name: Update image tags in deploys.yaml
+        run: |
+          yq eval -i 'select(.kind == "Deployment" and .metadata.name == "k8s-hw3-backend").spec.template.spec.containers[] |= select(.name == "k8s-hw3-backend").image = "ghcr.io/benedict-cs/k8s-hw3-backend:${{ github.sha }}"' ./k8s/deploys.yaml
+          yq eval -i 'select(.kind == "Deployment" and .metadata.name == "k8s-hw3-frontend").spec.template.spec.containers[] |= select(.name == "k8s-hw3-frontend").image = "ghcr.io/benedict-cs/k8s-hw3-frontend:${{ github.sha }}"' ./k8s/deploys.yaml
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v1
+        with:
+          version: "latest"
+
+
       - name: Debug Deployment Images
         run: |
           yq eval '.spec.template.spec.containers[].image' ./K8s/deploys.yaml
