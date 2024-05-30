@@ -68,6 +68,8 @@ jobs:
           kubectl apply -f ./K8s/deploys.yaml
           kubectl apply -f ./K8s/services.yaml
           kubectl apply -f ./K8s/ingress.yaml
+          kubectl logs frontend-deployment-794787dfdc-7qjl6
+          kubectl logs backend-deployment-868bfddd79-jj22q
       - name: Debug
         run: |
           echo "Contents of K8s Deployment YAML:"
