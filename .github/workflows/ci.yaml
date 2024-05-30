@@ -30,12 +30,8 @@ jobs:
           name: coverage-report
           path: ./backend/coverage/lcov-report/
 
-      - name: Compare coverage
-        run: echo "Compare coverage script should go here."
-        working-directory: ./backend
-
-      - name: Format JavaScript and JSON files
-        run: npx prettier --write "**/*.{js,json}"
+      - name: Format JavaScript and TypeScript files
+        run: npx prettier --write "**/*.{js,ts}"
         working-directory: ./backend
 
       - name: Check for changes
