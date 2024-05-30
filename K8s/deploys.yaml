@@ -41,7 +41,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: ghcr.io/benedict-cs/k8s-hw3-frontend:lastest
+        image: ghcr.io/benedict-cs/k8s-hw3-frontend
         ports:
         - containerPort: 80
         livenessProbe:
@@ -68,7 +68,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: ghcr.io/benedict-cs/k8s-hw3-backend:lastest
+        image: ghcr.io/benedict-cs/k8s-hw3-backend
         ports:
         - containerPort: 8888
         env:
