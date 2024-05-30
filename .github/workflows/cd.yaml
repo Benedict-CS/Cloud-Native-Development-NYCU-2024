@@ -76,7 +76,6 @@ jobs:
 
       - name: Debug
         run: |
-          cat ../../k8s/deploys.yaml
           kubectl get pods
 
       - name: Deploy to Kubernetes
