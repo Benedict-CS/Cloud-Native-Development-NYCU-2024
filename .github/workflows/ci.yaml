@@ -41,7 +41,7 @@ jobs:
         if: always() 
         uses:  davelosert/vitest-coverage-report-action@v2
         with:
-          path: ./backend/coverage/coverage-summary.json
+          path: backend/coverage/coverage-summary.json
 
 
       - name: Format JavaScript and TypeScript files
