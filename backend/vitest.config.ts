@@ -8,8 +8,7 @@ export default defineConfig({
       reporter: ['text', 'json-summary', 'json'], // list of reporters
       reportsDirectory: './coverage', // target directory for coverage reports
       exclude: [
-        'coverage-compare/**' // Exclude specific file
-        // You can add more patterns to exclude other files or directories
+        'coverage-compare/**' 
       ],
       thresholds: {
         branches: 55.55,
