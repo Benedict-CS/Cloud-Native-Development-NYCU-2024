@@ -30,7 +30,7 @@ kind: Deployment
 metadata:
   name: frontend-deployment
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: frontend
@@ -70,10 +70,6 @@ spec:
       labels:
         app: backend
     spec:
-      type: RollingUpdate
-      rollingUpdate:
-          maxSurge: 1
-          maxUnavailable: 1
       containers:
       - name: backend
         image: ghcr.io/benedict-cs/k8s-hw3-backend:latest
