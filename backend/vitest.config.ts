@@ -10,7 +10,11 @@ export default defineConfig({
       exclude: [
         'coverage-compare/**' // Exclude specific file
         // You can add more patterns to exclude other files or directories
-      ]
+      ],
+      thresholds: {
+        branches: 55.55,
+        autoUpdate: true
+      }
     }
   }
 })
