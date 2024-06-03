@@ -9,7 +9,7 @@ export default defineConfig({
       reportsDirectory: './coverage', // target directory for coverage reports
       exclude: ['coverage-compare/**'],
       thresholds: {
-        branches: 0,
+        branches: 71.42,
         autoUpdate: true
       }
     }
