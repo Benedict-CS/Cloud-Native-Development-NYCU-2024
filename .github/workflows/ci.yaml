@@ -41,8 +41,7 @@ jobs:
         if: always() 
         uses:  davelosert/vitest-coverage-report-action@v2
         with:
-          json-summary-path: backend/coverage/coverage-summary.json
-
+          working-directory: ./backend
 
       - name: Format JavaScript and TypeScript files
         run: npx prettier --write "**/*.{js,ts}"
