@@ -7,9 +7,7 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'json-summary', 'json'], // list of reporters
       reportsDirectory: './coverage', // target directory for coverage reports
-      exclude: [
-        'coverage-compare/**' 
-      ],
+      exclude: ['coverage-compare/**'],
       thresholds: {
         branches: 0,
         autoUpdate: true
