@@ -5,7 +5,7 @@ export default defineConfig({
     pool: 'forks',
     coverage: {
       provider: 'v8',
-      reporter: ['text', 'json-summary','json'], // list of reporters
+      reporter: ['text', 'json-summary', 'json'], // list of reporters
       reportsDirectory: './coverage', // target directory for coverage reports
       exclude: [
         'coverage-compare/**' // Exclude specific file
