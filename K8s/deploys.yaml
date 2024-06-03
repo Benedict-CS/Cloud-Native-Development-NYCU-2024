@@ -39,6 +39,10 @@ spec:
       labels:
         app: frontend
     spec:
+      type: RollingUpdate
+      rollingUpdate:
+          maxSurge: 1
+          maxUnavailable: 1
       containers:
       - name: frontend
         image: ghcr.io/benedict-cs/k8s-hw3-frontend:latest
@@ -66,6 +70,10 @@ spec:
       labels:
         app: backend
     spec:
+      type: RollingUpdate
+      rollingUpdate:
+          maxSurge: 1
+          maxUnavailable: 1
       containers:
       - name: backend
         image: ghcr.io/benedict-cs/k8s-hw3-backend:latest
