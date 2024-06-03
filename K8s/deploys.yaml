@@ -34,15 +34,16 @@ spec:
   selector:
     matchLabels:
       app: frontend
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
   template:
     metadata:
       labels:
         app: frontend
     spec:
-      type: RollingUpdate
-      rollingUpdate:
-          maxSurge: 1
-          maxUnavailable: 1
       containers:
       - name: frontend
         image: ghcr.io/benedict-cs/k8s-hw3-frontend:latest
