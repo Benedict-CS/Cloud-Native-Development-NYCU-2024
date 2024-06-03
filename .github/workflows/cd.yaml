@@ -65,6 +65,7 @@ jobs:
           echo "${{ secrets.KUBE }}"  > $HOME/.kube/config
       - name: Deploy to Kubernetes
         run: |
+          kubectl set image deployment/frontend-deployment frontend=ghcr.io/benedict-cs/k8s-hw3-frontend:latest --record
           kubectl apply -f ./K8s/deploys.yaml
           kubectl apply -f ./K8s/services.yaml
           kubectl apply -f ./K8s/ingress.yaml
