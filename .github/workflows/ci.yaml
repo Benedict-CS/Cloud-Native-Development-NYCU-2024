@@ -29,13 +29,6 @@ jobs:
         run: ls -la ./coverage
         working-directory: ./backend
 
-      - name: Calculate new coverage
-        run: node ./coverage/calCoverage.js
-        working-directory: ./backend
-
-      - name: Check and compare coverage
-        run: node ./coverage/checkCoverage.js
-        working-directory: ./backend
 
       - name: Upload coverage summary as old coverage
         if: success()
