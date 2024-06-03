@@ -5,14 +5,14 @@ export default defineConfig({
     pool: 'forks',
     coverage: {
       provider: 'v8',
-      reporter: ['text', 'html', 'json'], // list of reporters
+      reporter: ['text', 'json-summary', 'json'], // list of reporters
       reportsDirectory: './coverage', // target directory for coverage reports
-      exclude: [
-        'coverage-compare/**' // Exclude specific file
-        // You can add more patterns to exclude other files or directories
-      ],
+      exclude: ['coverage-compare/**'],
       thresholds: {
-        branches: 55.55,
+        lines: 58.28,
+        branches: 71.42,
+        functions: 23.07,
+        statements: 58.28,
         autoUpdate: true
       }
     }

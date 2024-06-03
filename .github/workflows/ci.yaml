@@ -26,23 +26,22 @@ jobs:
         working-directory: ./backend
 
       - name: List coverage directory contents
-        run: ls -la ./coveragetest
+        run: ls -la ./coverage
         working-directory: ./backend
 
-      - name: Calculate new coverage
-        run: node ./coveragetest/calCoverage.js
-        working-directory: ./backend
-
-      - name: Check and compare coverage
-        run: node ./coveragetest/checkCoverage.js
-        working-directory: ./backend
 
       - name: Upload coverage summary as old coverage
         if: success()
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: backend/coveragetest/coverage-summary.json
+          path: backend/coverage/coverage-summary.json
+
+      - name: 'Report Coverage'
+        if: always() 
+        uses:  davelosert/vitest-coverage-report-action@v2
+        with:
+          working-directory: ./backend
 
       - name: Format JavaScript and TypeScript files
         run: npx prettier --write "**/*.{js,ts}"
