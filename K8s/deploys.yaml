@@ -30,15 +30,12 @@ kind: Deployment
 metadata:
   name: frontend-deployment
 spec:
-  replicas: 10
+  replicas: 1
   selector:
     matchLabels:
       app: frontend
   strategy:
     type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 5
-      maxUnavailable: 5
   template:
     metadata:
       labels:
