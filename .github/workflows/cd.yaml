@@ -79,11 +79,11 @@ jobs:
           sudo mv argocd-linux-amd64 /usr/local/bin/argocd
       - name: Argo CD Login
         env:
-          ARGOCD_SERVER: "https://172.18.0.2:443"
+          ARGOCD_SERVER: "172.18.0.2"
           ARGOCD_USERNAME: "admin"
           ARGOCD_PASSWORD: "IthBXbgdQi1Qto1o"
         run: |
-          argocd login $ARGOCD_SERVER --username $ARGOCD_USERNAME --password $ARGOCD_PASSWORD --insecure
+          argocd login $ARGOCD_SERVER --username $ARGOCD_USERNAME --password $ARGOCD_PASSWORD --insecure --grpc-web
       - name: Sync Argo CD Application
         env:
           ARGOCD_APP_NAME: "cloud-native"
