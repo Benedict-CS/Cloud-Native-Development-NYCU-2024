@@ -86,6 +86,6 @@ jobs:
           argocd login $ARGOCD_SERVER --username $ARGOCD_USERNAME --password $ARGOCD_PASSWORD --insecure
       - name: Sync Argo CD Application
         env:
-          ARGOCD_APP_NAME: ${{ secrets.ARGOCD_APP_NAME }}
+          ARGOCD_APP_NAME: "cloud-native"
         run: |
           argocd app sync $ARGOCD_APP_NAME
