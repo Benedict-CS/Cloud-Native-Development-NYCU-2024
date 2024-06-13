@@ -48,12 +48,14 @@ jobs:
           repository: Benedict-CS/cloud-native-manifest
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }} # 使用个人访问令牌确保有推送权限
       - run: |
-          sed -i "s#${{github.actor}}.*#${{github.actor}}/k8s-hw3-frontend:${{github.sha}}#g" templates/deployment.yaml
-          sed -i "s#${{github.actor}}.*#${{github.actor}}/k8s-hw3-backend:${{github.sha}}#g" templates/deployment.yaml
-          git add -A
+          sed -i "s#repo:.*#repo: ghcr.io/benedict-cs/k8s-hw3-frontend#g" values.yaml
+          sed -i "s#tag:.*#tag: ${{ github.sha }}#g" values.yaml
+          sed -i "s#repo:.*#repo: ghcr.io/benedict-cs/k8s-hw3-backend#g" values.yaml
+          sed -i "s#tag:.*#tag: ${{ github.sha }}#g" values.yaml
+          git add values.yaml
           git config user.name 'Benedict-CS'
           git config user.email 'benedicttiong.cs@gmail.com'
-          git commit -am "Update image for - ${{ github.sha }}"
+          git commit -m "Update image tags for ${{ github.sha }}"
           git push origin main
 
   deploy:
