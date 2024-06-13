@@ -87,25 +87,3 @@ jobs:
           cat ./K8s/deploys.yaml
           echo "Current Pods in the Kubernetes Cluster:"
           kubectl get pods
-<<<<<<< HEAD
-
-
-=======
-      - name: Install Argo CD CLI
-        run: |
-          curl -sSL -o argocd-linux-amd64 "https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64"
-          chmod +x argocd-linux-amd64
-          sudo mv argocd-linux-amd64 /usr/local/bin/argocd
-      - name: Argo CD Login
-        env:
-          ARGOCD_SERVER: "172.18.0.2"
-          ARGOCD_USERNAME: "admin"
-          ARGOCD_PASSWORD: "IthBXbgdQi1Qto1o"
-        run: |
-          argocd login $ARGOCD_SERVER --username $ARGOCD_USERNAME --password $ARGOCD_PASSWORD --insecure --grpc-web
-      - name: Sync Argo CD Application
-        env:
-          ARGOCD_APP_NAME: "cloud-native"
-        run: |
-          argocd app sync $ARGOCD_APP_NAME
->>>>>>> d395c6596c140ba6dba086d0d1ea4fc4208099c5
