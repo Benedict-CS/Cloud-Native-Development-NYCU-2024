@@ -47,10 +47,9 @@ jobs:
           repository: Benedict-CS/cloud-native-manifest
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }} # 使用个人访问令牌确保有推送权限
       - run: |
-          sed -i "s#\(repo: ghcr.io/benedict-cs/k8s-hw3-frontend.*\)#\1#g" values.yaml
-          sed -i "/repo: ghcr.io/benedict-cs/k8s-hw3-frontend/!b;n;s#tag:.*#tag: ${{ github.sha }}#g" values.yaml
-          sed -i "s#\(repo: ghcr.io/benedict-cs/k8s-hw3-backend.*\)#\1#g" values.yaml
-          sed -i "/repo: ghcr.io/benedict-cs/k8s-hw3-backend/!b;n;s#tag:.*#tag: ${{ github.sha }}#g" values.yaml
+          awk '/repo: ghcr.io\/benedict-cs\/k8s-hw3-frontend/{print; getline; sub(/tag:.*/, "tag: '${{ github.sha }}'"); print; next} 
+               /repo: ghcr.io\/benedict-cs\/k8s-hw3-backend/{print; getline; sub(/tag:.*/, "tag: '${{ github.sha }}'"); print; next} 
+               {print}' values.yaml > values_temp.yaml && mv values_temp.yaml values.yaml
           git add values.yaml
           git config user.name 'Benedict-CS'
           git config user.email 'benedicttiong.cs@gmail.com'
