@@ -62,8 +62,8 @@ jobs:
           sudo wget https://github.com/mikefarah/yq/releases/download/v4.20.2/yq_linux_amd64 -O /usr/bin/yq
           sudo chmod +x /usr/bin/yq
       - run: |
-          yq eval -i 'select(.kind == "Deployment" and .metadata.name == "k8s-hw3-backend").spec.template.spec.containers[] |= select(.name == "k8s-hw3-backend").image = "ghcr.io/benedict-cs/k8s-backend:${{ github.sha }}"' ./K8s/deploys.yaml
-          yq eval -i 'select(.kind == "Deployment" and .metadata.name == "k8s-hw3-frontend").spec.template.spec.containers[] |= select(.name == "k8s-hw3-frontend").image = "ghcr.io/benedict-cs/k8s-frontend:${{ github.sha }}"' ./K8s/deploys.yaml
+          yq eval -i 'select(.kind == "Deployment" and .metadata.name == "k8s-hw3-backend").spec.template.spec.containers[] |= select(.name == "k8s-hw3-backend").image = "ghcr.io/benedict-cs/k8s-hw3-backend:${{ github.sha }}"' ./K8s/deploys.yaml
+          yq eval -i 'select(.kind == "Deployment" and .metadata.name == "k8s-hw3-frontend").spec.template.spec.containers[] |= select(.name == "k8s-hw3-frontend").image = "ghcr.io/benedict-cs/k8s-hw3-frontend:${{ github.sha }}"' ./K8s/deploys.yaml
       - uses: google-github-actions/setup-gcloud@v0.2.0
         with:
           version: "latest"
@@ -87,5 +87,25 @@ jobs:
           cat ./K8s/deploys.yaml
           echo "Current Pods in the Kubernetes Cluster:"
           kubectl get pods
+<<<<<<< HEAD
 
 
+=======
+      - name: Install Argo CD CLI
+        run: |
+          curl -sSL -o argocd-linux-amd64 "https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64"
+          chmod +x argocd-linux-amd64
+          sudo mv argocd-linux-amd64 /usr/local/bin/argocd
+      - name: Argo CD Login
+        env:
+          ARGOCD_SERVER: "172.18.0.2"
+          ARGOCD_USERNAME: "admin"
+          ARGOCD_PASSWORD: "IthBXbgdQi1Qto1o"
+        run: |
+          argocd login $ARGOCD_SERVER --username $ARGOCD_USERNAME --password $ARGOCD_PASSWORD --insecure --grpc-web
+      - name: Sync Argo CD Application
+        env:
+          ARGOCD_APP_NAME: "cloud-native"
+        run: |
+          argocd app sync $ARGOCD_APP_NAME
+>>>>>>> d395c6596c140ba6dba086d0d1ea4fc4208099c5
