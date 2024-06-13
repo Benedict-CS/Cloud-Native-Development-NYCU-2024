@@ -20,7 +20,7 @@ jobs:
         with:
           context: "frontend"
           push: true
-          tags: ghcr.io/benedict-cs/k8s-hw3-frontend
+          tags: ghcr.io/benedict-cs/k8s-hw3-frontend:${{ github.sha }}
 
   docker_build_backend:
     runs-on: ubuntu-latest
@@ -36,7 +36,22 @@ jobs:
         with:
           context: "backend"
           push: true
-          tags: ghcr.io/benedict-cs/k8s-hw3-backend
+          tags: ghcr.io/benedict-cs/k8s-hw3-backend:${{ github.sha }}
+
+  update-mainfest-stage:
+    runs-on: ubuntu-latest
+    needs: [docker_build_frontend, docker_build_backend]
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: https://github.com/Benedict-CS/cloud-native-manifest.git
+          ref: 'main'
+      - run: |
+          git add .
+          git config user.name 'Benedict-CS'
+          git config user.email 'benedicttiong.cs@gmail.com'
+          git commit -m "Update image for - ${{ github.sha }}"
+          git push
 
   deploy:
     needs: [docker_build_frontend, docker_build_backend]
@@ -72,6 +87,10 @@ jobs:
           cat ./K8s/deploys.yaml
           echo "Current Pods in the Kubernetes Cluster:"
           kubectl get pods
+<<<<<<< HEAD
+
+
+=======
       - name: Install Argo CD CLI
         run: |
           curl -sSL -o argocd-linux-amd64 "https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64"
@@ -89,3 +108,4 @@ jobs:
           ARGOCD_APP_NAME: "cloud-native"
         run: |
           argocd app sync $ARGOCD_APP_NAME
+>>>>>>> d395c6596c140ba6dba086d0d1ea4fc4208099c5
