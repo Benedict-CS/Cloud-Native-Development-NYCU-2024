@@ -44,7 +44,7 @@ const App = () => {
 
   return (
     <main className="App">
-          <h1>My Todos argocd demo 123</h1>
+          <h1>My Todos argocd demo 06/14 </h1>
       <AddTodo saveTodo={handleSaveTodo} />
       {todos.map((todo: ITodo) => (
         <TodoItem key={todo.id} updateTodo={handleUpdateTodo} deleteTodo={handleDeleteTodo} todo={todo} />
