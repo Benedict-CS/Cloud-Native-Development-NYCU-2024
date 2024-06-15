@@ -91,5 +91,3 @@ jobs:
         run: |
           echo "Contents of K8s Deployment YAML:"
           cat ./K8s/deploys.yaml
-          echo "Current Pods in the Kubernetes Cluster:"
-          kubectl get pods
