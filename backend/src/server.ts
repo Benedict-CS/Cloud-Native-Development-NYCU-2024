@@ -7,10 +7,10 @@ export const serverOf: () => FastifyInstance = () => {
   const server = fastify()
 
   server.get('/ping', async (request, reply) => {
-           return reply.status(200).send({ msg: 'pong!' })
+    return reply.status(200).send({ msg: 'pong!' })
   })
 
-        server.register(TodoRouter, { prefix: '/api' })
+  server.register(TodoRouter, { prefix: '/api' })
 
   return server
 }
@@ -20,7 +20,7 @@ export const serverStart: (appConfig: AppConfig) => (server: FastifyInstance) =>
     await establishConnection(appConfig.mongoConnectionString)
     const listenOptions: FastifyListenOptions = {
       port: appConfig.port,
-               host: appConfig.host
+      host: appConfig.host
     }
     await server.listen(listenOptions)
     return server
